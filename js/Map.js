@@ -1,19 +1,40 @@
 class Map {
   constructor() {
-    this.container = document.getElementById('canvas');
+    this.canvas = document.getElementById('canvas');
+    this.container = document.getElementById('map-search');
 
-    this.renderer = new THREE.WebGLRenderer( {canvas: this.container, antialias: true} );
+    this.renderer = new THREE.WebGLRenderer( {canvas: this.canvas, antialias: true} );
     this.renderer.setClearColor(0xffffff);
     this.renderer.setPixelRatio(window.devicePixelRatio);
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.setSize(this.width(), this.height());
 
     this.scene = new THREE.Scene();
 
-    this.camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 3000);
+    this.camera = new THREE.PerspectiveCamera(35, this.width() / this.height(), 0.1, 3000);
     this.camera.position.set(20, 600, 800);
     this.camera.lookAt( new THREE.Vector3( 0, 0, 0 ) );
 
     let controls = new THREE.OrbitControls( this.camera, this.renderer.domElement );
+
+    window.addEventListener('resize', () => {
+      this.handleWindowResize();
+    }, false)
+  }
+
+  width() {
+    return this.container.clientWidth;
+  }
+
+  height() {
+    return this.container.clientHeight * 0.8;
+  }
+
+  handleWindowResize() {
+
+  	this.renderer.setSize( this.width(), this.height() );
+
+  	this.camera.aspect = this.width() / this.height();
+  	this.camera.updateProjectionMatrix();
   }
 
   addLights() {
@@ -22,10 +43,16 @@ class Map {
 
     let light1 = new THREE.DirectionalLight(0x1DE9B6, 0.5);
     light1.position.set(0, 0, 1);
+    light1.castShadow = true;
+    light1.shadowDarkness = 0.5;
+    light1.shadowCameraVisible = true;
     this.scene.add(light1);
 
     let light2 = new THREE.DirectionalLight(0xE040FB, 0.4);
     light2.position.set(1, 1, -3);
+    light2.castShadow = true;
+    light2.shadowDarkness = 0.5;
+    light2.shadowCameraVisible = true;
     this.scene.add(light2);
 
     let light3 = new THREE.DirectionalLight(0xFF5722, 0.4);
@@ -46,8 +73,8 @@ class Map {
     const mouseVector = new THREE.Vector2();
 
     window.addEventListener('mousemove', (e) => {
-      mouseVector.x = 2 * (e.clientX / this.container.clientWidth) - 1;
-      mouseVector.y = 1 - 2 * ( e.clientY / this.container.clientHeight );
+      mouseVector.x = 2 * (e.offsetX / this.width()) - 1;
+      mouseVector.y = 1 - 2 * ( e.offsetY / this.height() );
     }, false);
 
     window.addEventListener('click', (e) => {

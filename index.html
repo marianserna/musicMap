@@ -8,27 +8,82 @@
       body {
         box-sizing: border-box;
         margin: 0;
-        overflow: hidden;
       }
 
-      canvas {
-        width: 100vw;
+      #container {
+        display: none;
+      }
+
+      #search {
+        width: 50vw;
+        min-height: 100vh;
+      }
+
+      #map-search {
+        min-height: 100vh;
+      }
+
+      #canvas {
+        height: 50vh;
+      }
+
+      #playlist {
+        width: 50vw;
         height: 100vh;
       }
     </style>
   </head>
   <body>
 
-    <canvas id="canvas"></canvas>
+    <div id="auth">
+      <div class="login" onclick="db.signin()">
+        <i class="fa fa-twitter fa-2x" aria-hidden="true"></i>
+        <span>Log in with Twitter</span>
+      </div>
+    </div>
 
+    <div id="container">
+
+      <div id="search">
+        <div id="name-search">
+          <form id="name-search-form">
+            <label for="name-search-input">Search</label>
+            <input type="text" name="search" value="" id="name-search-input">
+            <button type="search" name="button">Search</button>
+          </form>
+          
+          <div id="name-search-results">
+          </div>
+        </div>
+
+        <div id="map-search">
+          <canvas id="canvas"></canvas>
+        </div>
+      </div>
+
+      <div id="playlist">
+        <h1>playlist here</h1>
+      </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/3.6.8/firebase.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.js"></script>
+    <script src="js/Database.js"></script>
     <script src="js/vendor/OrbitControls.js"></script>
     <script src="js/Map.js"></script>
     <script src="js/Earth.js"></script>
+    <script src="js/SoundCloud.js"></script>
     <script src="js/vendor/Map3dGeometry.js"></script>
     <script src="js/vendor/Projector.js"></script>
+    <script src="https://connect.soundcloud.com/sdk/sdk-3.1.2.js"></script>
+    <script src="https://use.fontawesome.com/036ff7566f.js"></script>
 
-    <script type="text/javascript">
+    <script>
+      const sound = new SoundCloud();
+      // sound.search('nutcracker');
+    </script>
+
+    <script>
 
       fetch('/js/geo.json').then((response) => {
         return response.json();
@@ -37,7 +92,7 @@
       });
 
       function init(geoData) {
-        const map = new Map();
+        window.map = new Map();
         map.addLights();
 
         const planet = new Earth(geoData);
@@ -73,6 +128,11 @@
         }
       }
 
+    </script>
+
+    <script>
+      const db = new Database();
+      db.handleSignin();
     </script>
 
   </body>

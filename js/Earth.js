@@ -18,6 +18,8 @@ class Earth {
       let countryMesh = new THREE.Mesh(geometry, material);
       countryMesh.name = country;
       countryMesh.scale.set(this.scale, this.scale, this.scale);
+      countryMesh.castShadow = true;
+      countryMesh.receiveShadow = true;
       this.globeMesh.add(countryMesh);
     }
 
