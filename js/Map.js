@@ -15,6 +15,7 @@ class Map {
     this.camera.lookAt( new THREE.Vector3( 0, 0, 0 ) );
 
     let controls = new THREE.OrbitControls( this.camera, this.renderer.domElement );
+    controls.enableZoom = false;
 
     window.addEventListener('resize', () => {
       this.handleWindowResize();

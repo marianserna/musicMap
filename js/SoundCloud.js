@@ -3,33 +3,33 @@ class SoundCloud {
     SC.initialize({
       client_id: 'QkOuXLUgMp9Isa6jMqsp0hIgv0NY3BZb'
     });
-
-    this.handleSearch();
   }
 
-  handleSearch() {
-    let nameSearch = document.getElementById('name-search-form');
-    let input = document.getElementById('name-search-input');
+  play(track_url, play_all = false) {
+    const options = {
+      auto_play: true,
+      liking: false,
+      sharing: false,
+      download: false,
+      show_comments: false,
+      show_user: false,
+      show_artwork: false,
+      show_playcount: false,
+      maxheight: 125
+    };
 
-    nameSearch.addEventListener('submit', (e) => {
-      e.preventDefault();
-      this.search(input.value);
-    }, false);
-  }
+    if (this.widget) {
+      this.widget.load(track_url, options);
+    } else {
 
-  search(term) {
-    SC.get('/tracks', {
-      q: term, license: 'cc-by-sa'
-    }).then((tracks) => {
-      const search = document.getElementById('name-search-results');
-      search.innerHTML = '';
-      tracks.forEach((track) => {
-        // console.log(track);
-        const trackContainer = document.createElement('div');
-        trackContainer.classList.add('track');
-        trackContainer.innerHTML = `<h3>${track.title}</h3>`;
-        search.appendChild(trackContainer);
+      SC.oEmbed(track_url, options).then((oEmbed) => {
+        document.getElementById('player').innerHTML = oEmbed.html;
+        this.widget = SC.Widget(document.querySelector('iframe'));
+
+        this.widget.bind(SC.Widget.Events.FINISH, (e) => {
+          playlist.playNext();
+        });
       });
-    });
+    }
   }
 }

@@ -1,0 +1,155 @@
+* {
+  font-size: 1rem;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'Arsenal', sans-serif;
+  color: #8c95aa;
+}
+.recent {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  max-width: 250px;
+  z-index: 500;
+  padding: 10px;
+  border: solid 2px #f00;
+  color: #acacac;
+  opacity: 0;
+}
+#landing {
+  margin: 0;
+  margin-bottom: 200px;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #fff;
+}
+#landing video {
+  display: block;
+  margin: 0 auto;
+  max-width: 100vw;
+  max-height: 100vh;
+}
+#landing #web-nav span,
+#landing #web-nav ul {
+  position: absolute;
+  top: 75%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  z-index: 10;
+}
+#landing #music-word {
+  color: #542733;
+  font-size: 1.5em;
+}
+#landing #map-word {
+  color: #e94c6f;
+  font-size: 1.5em;
+}
+#container {
+  display: none;
+  width: 90vw;
+  margin: 0 auto;
+}
+#search {
+  width: 50vw;
+  min-height: 100vh;
+}
+#map-search {
+  min-height: 100vh;
+}
+#map-search span {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-size: 0.7rem;
+}
+#canvas {
+  height: 50vh;
+}
+#name-search-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 80%;
+  font-size: 0.8rem;
+}
+#name-search-form #name-search-input {
+  width: 70%;
+}
+#name-search-form #name-search-input:focus {
+  outline: 0;
+}
+#name-search-form button {
+  width: 30%;
+}
+#playlist {
+  width: 50vw;
+  height: 100vh;
+}
+#playlist h1 {
+  padding-top: 25px;
+  padding-bottom: 25px;
+  color: #e94c6f;
+}
+#playlist #player {
+  height: 20vh;
+}
+#playlist #playdrop {
+  overflow-y: scroll;
+  padding-top: 25px;
+  min-height: 50vh;
+  height: 40vh;
+}
+.track {
+  border-bottom: solid 1px #c2dfea;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.track img {
+  width: 50px;
+  height: 50px;
+}
+.track span {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  padding-left: 25px;
+  padding-right: 15px;
+  font-size: 0.75rem;
+  color: #7f7f7f;
+  width: 70%;
+}
+.track i {
+  width: 15%;
+  color: #a7dbdb;
+  text-align: right;
+}
+.track i:hover {
+  color: #9068be;
+}

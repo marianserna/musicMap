@@ -1,0 +1,19 @@
+{
+  "name": "musicmap",
+  "version": "1.0.0",
+  "description": "An app to create soundcloud playlists",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server",
+    "watch": "concurrently --names 'http, stylus' --prefix name 'npm run start' 'npm run styles:watch'",
+    "styles": "stylus -u autoprefixer-stylus ./css/style.styl -o ./css/style.css",
+    "styles:watch": "stylus -u autoprefixer-stylus -w ./css/style.styl -o ./css/style.css"
+  },
+  "devDependencies": {
+    "autoprefixer-stylus": "0.10.0",
+    "concurrently": "3.0.0",
+    "stylus": "0.54.5"
+  },
+  "author": "marian",
+  "license": "ISC"
+}
