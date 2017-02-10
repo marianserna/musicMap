@@ -36,7 +36,7 @@ class Playlist {
       trackContainer.classList.add('track');
 
       const trackImage = document.createElement('img');
-      trackImage.setAttribute('src', track.artwork_url || 'http://lorempixel.com/100/100/');
+      trackImage.setAttribute('src', track.artwork_url || 'https://unsplash.it/100/100');
       trackContainer.appendChild(trackImage);
 
       const trackTitle = document.createElement('span');
