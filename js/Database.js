@@ -83,7 +83,7 @@ class Database {
   }
 
   setCountry(lat, lon) {
-    const url = `http://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&sensor=true`;
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&sensor=true`;
     fetch(url).then((response) => {
       return response.json();
     }).then((json) => {

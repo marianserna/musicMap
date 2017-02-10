@@ -171,6 +171,7 @@
       const playlist = new Playlist();
       const search = new Search(sound);
       const navigation = new Navigation();
+      window.map = new Map();
       search.searchByTerm('loca');
 
       fetch('js/geo.json').then((response) => {
@@ -180,7 +181,6 @@
       });
 
       function init(geoData) {
-        window.map = new Map();
         map.addLights();
 
         const planet = new Earth(geoData);
