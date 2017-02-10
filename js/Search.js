@@ -10,7 +10,7 @@ class Search {
     search_results.innerHTML = '';
 
     if (tracks) {
-      Object.values(tracks).forEach((track) => {
+      Object.keys(tracks).map((key) => tracks[key]).forEach((track) => {
         search_results.appendChild(this.buildTrack(track));
       });
     } else {

@@ -21,7 +21,7 @@ class Playlist {
     if (!tracks) {
       return;
     }
-    this.tracks = Object.values(tracks).sort((track1, track2) => {
+    this.tracks = Object.keys(tracks).map((key) => tracks[key]).sort((track1, track2) => {
       if (track1.added_at < track2.added_at) {
         return -1;
       }
