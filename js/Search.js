@@ -39,12 +39,14 @@ class Search {
   }
 
   searchChart(genre) {
+    const search = document.getElementById('chart-search-results');
+    const spinner = '<img src="video/preloader.gif" id="spinner" alt="preloader">';
     const url = `https://soundcloud-marian.herokuapp.com/charts/${genre}`;
+    search.innerHTML = spinner;
 
     fetch(url).then((response) => {
       return response.json();
     }).then((tracks) => {
-      const search = document.getElementById('chart-search-results');
       search.innerHTML = '';
       tracks.forEach((track) => {
         search.appendChild(this.buildTrack(track));
@@ -77,7 +79,7 @@ class Search {
     trackContainer.appendChild(trackImage);
 
     const trackTitle = document.createElement('span');
-    trackTitle.textContent = track.title;
+    trackTitle.textContent = track.title.substring(0, 50);
     trackContainer.appendChild(trackTitle);
 
     const playButton = document.createElement('i');
@@ -87,6 +89,15 @@ class Search {
       this.sound.play(track.permalink_url);
     })
     trackContainer.appendChild(playButton);
+
+    const addButton = document.createElement('i');
+    addButton.classList.add('fa', 'fa-plus-circle', 'fa-2x');
+    addButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      database.saveTrack(track);
+    })
+    trackContainer.appendChild(addButton);
+
 
     return trackContainer;
   }

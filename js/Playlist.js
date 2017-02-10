@@ -17,8 +17,19 @@ class Playlist {
   }
 
   displayTracks(tracks) {
-    this.tracks = Object.values(tracks);
     this.playdrop.innerHTML = '';
+    if (!tracks) {
+      return;
+    }
+    this.tracks = Object.values(tracks).sort((track1, track2) => {
+      if (track1.added_at < track2.added_at) {
+        return -1;
+      }
+      if (track1.added_at > track2.added_at) {
+        return 1;
+      }
+      return 0;
+    }).reverse();
 
     this.tracks.forEach((track) => {
       const trackContainer = document.createElement('div');

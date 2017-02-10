@@ -1,90 +1,147 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <!-- preloader from http://preloaders.net/
+    icons from font-awesome -->
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Creating a SoundCloud Playlist">
+    <meta name="Description" content="create your own SoundCloud playlist and find your favourite music">
+    <meta name="Keywords" content="playlist search music soundcloud">
+    <meta name="title" content="Music Map">
+
+    <meta property="og:title" content="Music Map">
+    <meta content="website" property="og:type">
+    <meta content="http://show.marianserna.com/musicMap/index.html" property="og:url">
+    <meta property="og:image" content="http://show.marianserna.com/musicMap/img/map-img.png">
+    <meta property="og:site_name" content="Music Map">
+    <meta property="og:description" content="Music Map allows you to create your own SoundCloud playlist and find your favourite music">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="http://show.marianserna.com/musicMap/index.html">
+    <meta name="twitter:creator" content="@mariansernaf">
+    <meta name="twitter:title" content="musicMap">
+    <meta name="twitter:description" content="musicMap allows you to create playlists based on the SoundCloud API as well as find your favourite music. The track you add to your playlist are also added to your country.">
+    <meta name="twitter:image" content="http://show.marianserna.com/musicMap/img/map-img.png">
+
     <link href="https://fonts.googleapis.com/css?family=Arsenal" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <title>map</title>
 
+    <title>Music Map</title>
   </head>
+
   <body>
+    <div id="login-page">
+      <div id="landing">
+        <video autoplay loop>
+          <source src="../video/finalRender.mp4" type="video/mp4">
+          Sorry, your browser does not support the video tag.
+        </video>
+      </div>
 
-    <div id="landing">
-      <video autoplay loop>
-        <source src="../video/finalRender.mp4" type="video/mp4">
-        Sorry, your browser does not support the video tag.
-      </video>
+      <div class="share-buttons">
+        <div id="facebook" class="fb-share-button" data-layout="button" data-size="small" data-mobile-iframe="true"><a   class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u&amp;src=sdkpreparse">Share</a></div>
 
-      <!-- <nav id="web-nav">
-        <span>Search music by</span>
-        <ul>
-          <li class="web-nav-item"><a href="#">Country</a></li>
-          <li class="web-nav-item"><a href="#">Genre</a></li>
-        </ul>
-      </nav> -->
-    </div>
+        <div id="twitter"><a class="twitter-share-button" href="https://twitter.com/intent/tweet" data-size="small"> Tweet</a></div>
 
-    <div id="auth">
-      <div class="login" onclick="db.signin()">
-        <i class="fa fa-twitter fa-2x" aria-hidden="true"></i>
-        <span>Log in with Twitter</span>
+        <div id="pinterest">
+          <a href="https://www.pinterest.com/pin/create/button/"> <img   src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png" />
+          </a>
+        </div>
+      </div>
+
+      <div id="auth">
+        <div class="login" onclick="database.signin()">
+          <i class="fa fa-twitter" aria-hidden="true"></i>
+          <span>Log in with Twitter</span>
+        </div>
+      </div>
+
+      <div id="loading">
+        <img src="video/preloader.gif" alt="preloader">
       </div>
     </div>
 
     <div id="container">
+      <nav>
+        <div class="nav-left">
+          <span>Search music by:</span>
+          <ul>
+            <li class="nav-country active"><a href="#">Country</a></li>
+            <li class="nav-name"><a href="#">Name</a></li>
+            <li class="nav-genre"><a href="#">Genre</a></li>
+          </ul>
+        </div>
 
-      <div id="search">
-        <div id="chart-search">
-          <form id="chart-search-form">
-            <select id="chart-search-input">
-              <option value='all-music'>All Music</option>
-              <option value='all-audio'>All Audio</option>
-              <option value='alternativerock'>Alternative Rock</option>
-              <option value='ambient'>Ambient</option>
-              <option value='classical'>Classical</option>
-              <option value='country'>Country</option>
-              <option value='danceedm'>Dance EDM</option>
-              <option value='dancehall'>Dance Hall</option>
-              <option value='deephouse'>Deephouse</option>
-              <option value='disco'>Disco</option>
-              <option value='drumbass'>Drumbass</option>
-              <option value='dubstep'>Dubstep</option>
-              <option value='electronic'>Electronic</option>
-              <option value='folksingersongwriter'>Folk</option>
-              <option value='hiphoprap'>Hip Hop</option>
-            </select>
-            <button type="search" name="button">Find</button>
-          </form>
+        <div class="nav-right">
+          <ul>
+            <li class="nav-playlist"><a href="#">Playlist</a></li>
+            <li><a href="#" onclick="database.signout(); sound.pause(); return false;">Logout</a></li>
+          </ul>
+        </div>
+      </nav>
 
-          <div id="chart-search-results">
+      <div id="map-container">
+        <canvas id="canvas"></canvas>
+        <span>Click on a country - rotate map if needed -</span>
+      </div>
 
+      <div id="main-container">
+        <div id="search">
+          <div id="map-search">
+            <header>
+              <p id="drag">Drag and drop music to your playlist</p>
+              <h2>People from <span class="results-country">country</span> like:</h2>
+            </header>
+            <div id="map-search-results"></div>
+          </div>
+
+          <div id="chart-search">
+            <header>
+              <form id="chart-search-form">
+                <select id="chart-search-input">
+                  <option value='all-music'>All Music</option>
+                  <option value='all-audio'>All Audio</option>
+                  <option value='alternativerock'>Alternative Rock</option>
+                  <option value='ambient'>Ambient</option>
+                  <option value='classical'>Classical</option>
+                  <option value='country'>Country</option>
+                  <option value='danceedm'>Dance EDM</option>
+                  <option value='dancehall'>Dance Hall</option>
+                  <option value='deephouse'>Deephouse</option>
+                  <option value='disco'>Disco</option>
+                  <option value='drumbass'>Drumbass</option>
+                  <option value='dubstep'>Dubstep</option>
+                  <option value='electronic'>Electronic</option>
+                  <option value='folksingersongwriter'>Folk</option>
+                  <option value='hiphoprap'>Hip Hop</option>
+                </select>
+                <button type="search" name="button" class="button">Find</button>
+              </form>
+            </header>
+
+            <div id="chart-search-results"></div>
+          </div>
+
+          <div id="name-search">
+            <header>
+              <form id="name-search-form">
+                <input type="text" name="search" value="" placeholder="Search" id="name-search-input">
+                <button type="search" name="button" class="button">Find</button>
+              </form>
+            </header>
+
+            <div id="name-search-results"></div>
           </div>
         </div>
 
-        <div id="map-search">
-          <canvas id="canvas"></canvas>
-          <span>Click on a country - rotate map if needed -</span>
-          <div id="map-search-results"></div>
+        <div id="playlist">
+          <div id="player"></div>
+          <div id="playdrop"></div>
+          <a href="#" id="play-all">Play All <i class="fa fa-play"></i></a>
         </div>
-
-        <div id="name-search">
-          <form id="name-search-form">
-            <input type="text" name="search" value="" placeholder="Search" id="name-search-input">
-            <button type="search" name="button">Find</button>
-          </form>
-
-          <div id="name-search-results">
-          </div>
-        </div>
-
       </div>
 
-      <div id="playlist">
-        <h1>playlist here</h1>
-        <div id="player"></div>
-        <a href="#" id="play-all">Play All <i class="fa fa-play"></i></a>
-        <div id="playdrop"></div>
-      </div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/3.6.8/firebase.js"></script>
@@ -105,13 +162,15 @@
     <script src="js/Playlist.js"></script>
     <script src="js/Search.js"></script>
     <script src="js/Recent.js"></script>
+    <script src="js/Navigation.js"></script>
 
     <script>
       const database = new Database();
       const sound = new SoundCloud();
       const playlist = new Playlist();
       const search = new Search(sound);
-      search.searchByTerm('nutcracker');
+      const navigation = new Navigation();
+      search.searchByTerm('loca');
 
       fetch('/js/geo.json').then((response) => {
         return response.json();
@@ -129,6 +188,8 @@
         map.addRayCasting(planet.globeMesh, (name) => {
           planet.colourCountry(name);
           database.searchCountry(name);
+          document.querySelector('.results-country').innerHTML = name;
+          navigation.slideToMapResults();
         });
 
         navigator.geolocation.getCurrentPosition((position) => {
@@ -152,5 +213,35 @@
       }
 
     </script>
+
+    <div id="fb-root"></div>
+      <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
+        fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+      </script>
+
+      <script>window.twttr = (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+          t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+        t._e = [];
+
+        t.ready = function(f) {
+          t._e.push(f);
+        };
+
+        return t;
+        }(document, "script", "twitter-wjs"));
+      </script>
+
+      <script type="text/javascript" async defer src="//assets.pinterest.com/js/pinit.js"></script>
   </body>
 </html>

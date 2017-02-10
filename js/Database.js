@@ -22,23 +22,34 @@ class Database {
     firebase.auth().signInWithRedirect(this.provider);
   }
 
+  signout() {
+    firebase.auth().signOut();
+  }
+
   handleSignin() {
     firebase.auth().onAuthStateChanged((user) => {
       this.user = user;
+      const container = document.getElementById('container');
+      const auth = document.getElementById('auth');
+      const login = document.getElementById('login-page');
+      document.getElementById('loading').style.display = 'none';
+
       if (user) {
-        const container = document.getElementById('container');
-        const auth = document.getElementById('auth');
         container.style.display = 'flex';
         auth.style.display = 'none';
+        login.style.display = 'none';
         window.map.handleWindowResize();
         this.listenForNew();
       } else {
-        // No user is signed in.
+        container.style.display = 'none';
+        auth.style.display = 'block';
+        login.style.display = 'block';
       }
     });
   }
 
   saveTrack(track) {
+    track.added_at = Date.now();
     this.database.ref(`users/${this.user.uid}/${track.id}`).set(track);
     if (this.userCountry) {
       this.database.ref(`countries/${this.userCountry}/${track.id}`).set(track);
@@ -60,7 +71,7 @@ class Database {
 
   // When new tracks are added to playlist or to recent
   listenForNew() {
-    this.database.ref(`users/${this.user.uid}`).on('value', (snapshot) => {
+    this.database.ref(`users/${this.user.uid}`).orderByChild('added_at').on('value', (snapshot) => {
       playlist.displayTracks(snapshot.val());
     });
 
@@ -72,19 +83,24 @@ class Database {
   }
 
   setCountry(lat, lon) {
-    const url = `http://ws.geonames.org/countryCodeJSON?lat=${lat}&lng=${lon}&username=demo`;
+    const url = `http://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&sensor=true`;
     fetch(url).then((response) => {
       return response.json();
     }).then((json) => {
-      this.userCountry = json.countryName.replace(/ /g, '').toLowerCase();
-      this.userCountryCode = json.countryCode;
-      this.userFullCountry = json.countryName;
+      const country = json.results[0].address_components.find((addr) => {
+        return addr.types.includes('country');
+      });
+      if (country) {
+        this.userCountryCode = country.short_name;
+        this.userCountry = country.long_name.replace(/ /g, '').toLowerCase();
+        this.userFullCountry = country.long_name;
+      }
     });
   }
 
   searchCountry(countryName) {
     countryName = countryName.replace(/ /g, '').toLowerCase();
-    this.database.ref(`countries/${countryName}`).once('value').then((snapshot) => {
+    this.database.ref(`countries/${countryName}`).limitToLast(15).once('value').then((snapshot) => {
       const tracks = snapshot.val();
       search.displayCountryTracks(tracks);
     });

@@ -1,7 +1,7 @@
 class Map {
   constructor() {
     this.canvas = document.getElementById('canvas');
-    this.container = document.getElementById('map-search');
+    this.container = document.getElementById('map-container');
 
     this.renderer = new THREE.WebGLRenderer( {canvas: this.canvas, antialias: true} );
     this.renderer.setClearColor(0xffffff);
@@ -27,7 +27,7 @@ class Map {
   }
 
   height() {
-    return this.container.clientHeight * 0.8;
+    return this.container.clientHeight;
   }
 
   handleWindowResize() {

@@ -32,4 +32,10 @@ class SoundCloud {
       });
     }
   }
+
+  pause() {
+    if (this.widget) {
+      this.widget.pause();
+    }
+  }
 }
