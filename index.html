@@ -25,6 +25,7 @@
     <meta name="twitter:image" content="http://show.marianserna.com/musicMap/img/map-img.png">
 
     <link href="https://fonts.googleapis.com/css?family=Arsenal" rel="stylesheet">
+    <link rel="icon" href="favicon.ico">
     <link rel="stylesheet" href="css/style.css">
 
     <title>Music Map</title>
@@ -34,7 +35,7 @@
     <div id="login-page">
       <div id="landing">
         <video autoplay loop>
-          <source src="../video/finalRender.mp4" type="video/mp4">
+          <source src="video/finalRender.mp4" type="video/mp4">
           Sorry, your browser does not support the video tag.
         </video>
       </div>
@@ -45,7 +46,7 @@
         <div id="twitter"><a class="twitter-share-button" href="https://twitter.com/intent/tweet" data-size="small"> Tweet</a></div>
 
         <div id="pinterest">
-          <a href="https://www.pinterest.com/pin/create/button/"> <img   src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png" />
+          <a href="https://www.pinterest.com/pin/create/button/"> <img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png" alt="pinterest image" />
           </a>
         </div>
       </div>
@@ -116,7 +117,7 @@
                   <option value='folksingersongwriter'>Folk</option>
                   <option value='hiphoprap'>Hip Hop</option>
                 </select>
-                <button type="search" name="button" class="button">Find</button>
+                <button type="submit" name="button" class="button">Find</button>
               </form>
             </header>
 
@@ -127,7 +128,7 @@
             <header>
               <form id="name-search-form">
                 <input type="text" name="search" value="" placeholder="Search" id="name-search-input">
-                <button type="search" name="button" class="button">Find</button>
+                <button type="submit" name="button" class="button">Find</button>
               </form>
             </header>
 
@@ -172,7 +173,7 @@
       const navigation = new Navigation();
       search.searchByTerm('loca');
 
-      fetch('/js/geo.json').then((response) => {
+      fetch('js/geo.json').then((response) => {
         return response.json();
       }).then((geoData) => {
         init(geoData);
