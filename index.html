@@ -145,6 +145,7 @@
 
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.2/fetch.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.8/firebase.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.js"></script>
     <script src="https://connect.soundcloud.com/sdk/sdk-3.1.2.js"></script>
@@ -168,8 +169,8 @@
     <script>
       const database = new Database();
       const sound = new SoundCloud();
-      const playlist = new Playlist();
-      const search = new Search(sound);
+      var playlist = new Playlist();
+      var search = new Search(sound);
       const navigation = new Navigation();
       window.map = new Map();
       search.searchByTerm('loca');

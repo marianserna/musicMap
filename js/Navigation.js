@@ -14,7 +14,6 @@ class Navigation {
         document.querySelector('.nav-country').classList.add('active');
         mapContainer.style.display = 'block';
         this.scrollTo(mapContainer);
-        //show #search container
         search.style.display = 'block';
         document.getElementById('playlist').classList.remove('full-width');
       });
@@ -26,7 +25,6 @@ class Navigation {
         const nameSearch = document.getElementById('name-search');
         nameSearch.style.display =  'block';
         this.scrollTo(this.mainContainer);
-        //show #search container
         search.style.display = 'block';
         document.getElementById('playlist').classList.remove('full-width');
       });
@@ -38,7 +36,6 @@ class Navigation {
         const chartSearch = document.getElementById('chart-search');
         chartSearch.style.display = 'block';
         this.scrollTo(this.mainContainer);
-        //show #search container
         search.style.display = 'block';
         document.getElementById('playlist').classList.remove('full-width');
       });
@@ -73,6 +70,10 @@ class Navigation {
 
   scrollTo(element) {
     TweenMax.to(document.body, 0.5, {
+      scrollTop: element.offsetTop,
+      delay: 0.5
+    });
+    TweenMax.to(document.querySelector('html'), 0.5, {
       scrollTop: element.offsetTop,
       delay: 0.5
     });

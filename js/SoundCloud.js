@@ -24,7 +24,7 @@ class SoundCloud {
 
       SC.oEmbed(track_url, options).then((oEmbed) => {
         document.getElementById('player').innerHTML = oEmbed.html;
-        this.widget = SC.Widget(document.querySelector('iframe'));
+        this.widget = SC.Widget(document.querySelector('player > iframe'));
 
         this.widget.bind(SC.Widget.Events.FINISH, (e) => {
           playlist.playNext();
