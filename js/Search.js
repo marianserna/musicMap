@@ -6,15 +6,15 @@ class Search {
   }
 
   displayCountryTracks(tracks) {
-    const search = document.getElementById('map-search-results');
-    search.innerHTML = '';
+    const search_results = document.getElementById('map-search-results');
+    search_results.innerHTML = '';
 
     if (tracks) {
       Object.values(tracks).forEach((track) => {
-        search.appendChild(this.buildTrack(track));
+        search_results.appendChild(this.buildTrack(track));
       });
     } else {
-      search.innerHTML = 'Oopsies! No tracks have been added to this country yet...'
+      search_results.innerHTML = 'Oopsies! No tracks have been added to this country yet...'
     }
   }
 
@@ -39,17 +39,17 @@ class Search {
   }
 
   searchChart(genre) {
-    const search = document.getElementById('chart-search-results');
+    const search_results = document.getElementById('chart-search-results');
     const spinner = '<img src="video/preloader.gif" id="spinner" alt="preloader">';
     const url = `https://soundcloud-marian.herokuapp.com/charts/${genre}`;
-    search.innerHTML = spinner;
+    search_results.innerHTML = spinner;
 
     fetch(url).then((response) => {
       return response.json();
     }).then((tracks) => {
-      search.innerHTML = '';
+      search_results.innerHTML = '';
       tracks.forEach((track) => {
-        search.appendChild(this.buildTrack(track));
+        search_results.appendChild(this.buildTrack(track));
       });
     });
   }
@@ -58,10 +58,10 @@ class Search {
     SC.get('/tracks', {
       q: term, license: 'cc-by-sa'
     }).then((tracks) => {
-      const search = document.getElementById('name-search-results');
-      search.innerHTML = '';
+      const search_results = document.getElementById('name-search-results');
+      search_results.innerHTML = '';
       tracks.forEach((track) => {
-        search.appendChild(this.buildTrack(track));
+        search_results.appendChild(this.buildTrack(track));
       });
     });
   }
