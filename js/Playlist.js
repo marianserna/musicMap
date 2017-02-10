@@ -12,7 +12,6 @@ class Playlist {
     });
     this.playdrop.addEventListener('dragover', (e) => {
       e.preventDefault();
-      // console.log(e);
     });
   }
 
