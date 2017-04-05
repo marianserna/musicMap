@@ -98,7 +98,6 @@ class Search {
     })
     trackContainer.appendChild(addButton);
 
-
     return trackContainer;
   }
 }

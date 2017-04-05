@@ -82,12 +82,8 @@
         </div>
       </nav>
 
-      <div id="map-container">
-        <canvas id="canvas"></canvas>
-        <span>Click on a country - rotate map if needed -</span>
-      </div>
-
       <div id="main-container">
+        <a id="back-to-map" href="#" onClick="navigation.slideOut(); return false;">Back to Map &gt;</a>
         <div id="search">
           <div id="map-search">
             <header>
@@ -143,14 +139,19 @@
         </div>
       </div>
 
+      <div id="map-container">
+        <canvas id="canvas"></canvas>
+        <span>Drag map and click on desired country</span>
+      </div>
+
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.2/fetch.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.8/firebase.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.js"></script>
     <script src="https://connect.soundcloud.com/sdk/sdk-3.1.2.js"></script>
-    <script src="https://use.fontawesome.com/036ff7566f.js"></script>
     <script src="https://w.soundcloud.com/player/api.js"></script>
+    <script src="https://use.fontawesome.com/036ff7566f.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js"></script>
 
     <script src="js/vendor/OrbitControls.js"></script>
@@ -169,8 +170,8 @@
     <script>
       const database = new Database();
       const sound = new SoundCloud();
-      var playlist = new Playlist();
-      var search = new Search(sound);
+      let playlist = new Playlist();
+      let search = new Search(sound);
       const navigation = new Navigation();
       window.map = new Map();
       search.searchByTerm('loca');
@@ -191,7 +192,7 @@
           planet.colourCountry(name);
           database.searchCountry(name);
           document.querySelector('.results-country').innerHTML = name;
-          navigation.slideToMapResults();
+          navigation.displayMapResults();
         });
 
         navigator.geolocation.getCurrentPosition((position) => {
@@ -208,8 +209,11 @@
         requestAnimationFrame(render);
 
         function render() {
-          map.renderer.render(map.scene, map.camera);
-          planet.globeMesh.rotation.y += 0.001;
+          if (map.state === 'playing') {
+            map.renderer.render(map.scene, map.camera);
+            planet.globeMesh.rotation.y += 0.001;
+          }
+          
           requestAnimationFrame(render);
         }
       }

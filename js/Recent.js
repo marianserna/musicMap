@@ -14,7 +14,7 @@ class Recent {
       opacity: 1,
       ease: Power1.easeInOut
     });
-    // after 2 secs, fade element out with GSAP
+    // after 2 secs, fade element out
     TweenMax.to(this.recentContainer, 0.5, {
       opacity: 0,
       ease: Power1.easeOut,

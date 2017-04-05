@@ -21,11 +21,9 @@ class SoundCloud {
     if (this.widget) {
       this.widget.load(track_url, options);
     } else {
-
       SC.oEmbed(track_url, options).then((oEmbed) => {
         document.getElementById('player').innerHTML = oEmbed.html;
         this.widget = SC.Widget(document.querySelector('#player > iframe'));
-
         this.widget.bind(SC.Widget.Events.FINISH, (e) => {
           playlist.playNext();
         });

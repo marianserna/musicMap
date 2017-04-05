@@ -27,6 +27,7 @@ body {
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   -webkit-transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
   transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: 20;
 }
 #landing {
   margin: 0;
@@ -52,6 +53,7 @@ nav {
       -ms-flex-align: center;
           align-items: center;
   width: 100vw;
+  z-index: 20;
 }
 nav ul {
   display: -webkit-box;
@@ -59,18 +61,18 @@ nav ul {
   display: flex;
   margin: 0;
 }
-nav ul li {
+nav li {
   list-style: none;
   padding-left: 20px;
 }
-nav ul li.active a {
+nav li.active a {
   color: #a199e9;
 }
-nav ul a {
+nav a {
   text-decoration: none;
   color: #c6ff00;
 }
-nav ul a:hover {
+nav a:hover {
   color: #a199e9;
 }
 nav .nav-left {
@@ -162,14 +164,34 @@ nav .nav-right ul {
   margin: 0 auto;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+  position: relative;
 }
 #main-container {
+  background-color: #fff;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  padding: 80px 80px 0 80px;
+  padding: 50px 80px 0 80px;
   width: 100vw;
+  height: 100vh;
   margin-bottom: 30px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  -webkit-transform: translateX(-100%);
+          transform: translateX(-100%);
+  overflow-y: scroll;
+}
+a#back-to-map {
+  position: absolute;
+  top: 75px;
+  right: 50px;
+  text-decoration: none;
+  color: #8c95aa;
+}
+a#back-to-map:hover {
+  color: #a199e9;
 }
 #search {
   width: 50%;
@@ -181,6 +203,7 @@ nav .nav-right ul {
 }
 #map-container {
   width: 100vw;
+  max-height: 100vh;
   height: 100vh;
 }
 #map-container span {
@@ -260,8 +283,10 @@ header h2 span {
   margin-right: 20px;
   border: 0px;
   background-color: transparent;
-  border-bottom: 2px solid #a7dbdb;
+  border: 1px solid #a7dbdb;
   color: #8c95aa;
+  border-radius: 3px;
+  padding-left: 5px;
 }
 #name-search-input #inner-editor,
 #chart-search-input #inner-editor {

@@ -12,9 +12,7 @@ class Database {
 
     // Twitter auth from firebase documentation: https://firebase.google.com/docs/auth/web/twitter-login
     this.provider = new firebase.auth.TwitterAuthProvider();
-
     this.database = firebase.database();
-
     this.handleSignin();
   }
 
@@ -27,6 +25,7 @@ class Database {
   }
 
   handleSignin() {
+    // Adds an observer for auth state changes.
     firebase.auth().onAuthStateChanged((user) => {
       this.user = user;
       const container = document.getElementById('container');

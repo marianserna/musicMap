@@ -12,7 +12,8 @@
   "devDependencies": {
     "autoprefixer-stylus": "0.10.0",
     "concurrently": "3.0.0",
-    "stylus": "0.54.5"
+    "stylus": "0.54.5",
+    "http-server": "0.9.0"
   },
   "author": "marian",
   "license": "ISC"

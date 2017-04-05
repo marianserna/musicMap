@@ -1,5 +1,6 @@
 class Map {
   constructor() {
+    this.state = 'playing';
     this.canvas = document.getElementById('canvas');
     this.container = document.getElementById('map-container');
 
@@ -67,6 +68,14 @@ class Map {
     let light5 = new THREE.DirectionalLight(0xE040FB, 0.1);
     light5.position.set(-10, -6, -4);
     this.scene.add(light5);
+  }
+
+  play() {
+    this.state = 'playing';
+  }
+
+  pause() {
+    this.state = 'paused';
   }
 
   addRayCasting(countries, callback) {
